@@ -1,11 +1,10 @@
 /**
- *
- * @author NGUYEN XUAN TRUONG
+ * @author Nguyễn Xuân Trường
  */
 public class Employee {
     private int id;
     private String name;
-    private int birthyear;
+    private String birthyear;
     private String email;
     private double salary;
     private String department;
@@ -13,7 +12,7 @@ public class Employee {
     private boolean isMedical;
     private int lineInFile;
 
-    public Employee(int id, String name, int birthyear, String email, double salary, String department, String jobTitle, boolean isMedical) {
+    public Employee(int id, String name, String birthyear, String email, double salary, String department, String jobTitle, boolean isMedical, int lineInFile) {
         this.id = id;
         this.name = name;
         this.birthyear = birthyear;
@@ -22,6 +21,7 @@ public class Employee {
         this.department = department;
         this.jobTitle = jobTitle;
         this.isMedical = isMedical;
+        this.lineInFile = lineInFile;
     }
 
     public void setId(int id) {
@@ -32,7 +32,7 @@ public class Employee {
         this.name = name;
     }
 
-    public void setBirthyear(int birthyear) {
+    public void setBirthyear(String birthyear) {
         this.birthyear = birthyear;
     }
 
@@ -64,7 +64,7 @@ public class Employee {
         return name;
     }
 
-    public int getBirthyear() {
+    public String getBirthyear() {
         return birthyear;
     }
 
