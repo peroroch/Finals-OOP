@@ -1,5 +1,5 @@
 /**
- * @author Nguyễn Xuân Trường
+ * @author Nguyen Xuan Truong
  */
 public class Employee {
     private int id;
@@ -90,5 +90,9 @@ public class Employee {
 
     public int getLineInFile() {
         return lineInFile;
+    }
+
+    public String toString() {
+        return this.name;
     }
 }
