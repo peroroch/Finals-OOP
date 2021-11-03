@@ -1,0 +1,5 @@
+Frodo Baggins	01-01-1987	bagginsf@gmail.com	20.00	Personnel	Recuiter	0	1
+Monty Python	01-01-1987	pythonm@gmail.com	30	Medical Record	Secretary	0	2
+Marty McFly	01-01-1987	mcflym@gmail.com	40	Pharmacy	Doctor	1	3
+Luke Skywalker	01-01-1987	skywalkerl@gmail.com	50	Radiology	Doctor	1	4
+Harry Potter	01-01-1987	potterh@gmail.com	60	Business Management	Accountant	0	5
