@@ -4,7 +4,7 @@
 public class Employee {
     private int id;
     private String name;
-    private String birthyear;
+    private String birthYear;
     private String email;
     private double salary;
     private String department;
@@ -12,10 +12,10 @@ public class Employee {
     private boolean isMedical;
     private int lineInFile;
 
-    public Employee(int id, String name, String birthyear, String email, double salary, String department, String jobTitle, boolean isMedical, int lineInFile) {
+    public Employee(int id, String name, String birthYear, String email, double salary, String department, String jobTitle, boolean isMedical, int lineInFile) {
         this.id = id;
         this.name = name;
-        this.birthyear = birthyear;
+        this.birthYear = birthYear;
         this.email = email;
         this.salary = salary;
         this.department = department;
@@ -32,8 +32,8 @@ public class Employee {
         this.name = name;
     }
 
-    public void setBirthyear(String birthyear) {
-        this.birthyear = birthyear;
+    public void setBirthYear(String birthYear) {
+        this.birthYear = birthYear;
     }
 
     public void setEmail(String email) {
@@ -64,8 +64,8 @@ public class Employee {
         return name;
     }
 
-    public String getBirthyear() {
-        return birthyear;
+    public String getBirthYear() {
+        return birthYear;
     }
 
     public String getEmail() {
