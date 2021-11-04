@@ -49,7 +49,7 @@ public class GUIClient extends JFrame {
                 if (!employees.isEmpty())
                     if (i == employees.get(0).getId()) {
                         line = employees.get(0).getName() + "\t" +
-                                employees.get(0).getBirthyear() + "\t" +
+                                employees.get(0).getBirthYear() + "\t" +
                                 employees.get(0).getEmail() + "\t" +
                                 String.format("%.2f", employees.get(0).getSalary()) + "\t" +
                                 employees.get(0).getDepartment() + "\t" +
@@ -84,6 +84,8 @@ public class GUIClient extends JFrame {
                         if (answer == 1) {
                             return;
                         }
+                        unsave = false;
+                        employees = new ArrayList<>();
                     } catch (HeadlessException exception3) {
                     }
                 }
@@ -112,6 +114,8 @@ public class GUIClient extends JFrame {
                         if (answer == 1) {
                             return;
                         }
+                        unsave = false;
+                        employees = new ArrayList<>();
                     } catch (HeadlessException exception3) {
                     }
                 }
@@ -184,7 +188,7 @@ public class GUIClient extends JFrame {
                 editor.add(nameField);
 
                 editor.add(new JLabel("Date of Birth:"));
-                JTextField DOBField = new JTextField(choice.getBirthyear());
+                JTextField DOBField = new JTextField(choice.getBirthYear());
                 editor.add(DOBField);
 
                 editor.add(new JLabel("Email:"));
@@ -224,7 +228,7 @@ public class GUIClient extends JFrame {
                                 }
                             }
                         if (!nameField.getText().isEmpty()) finalChoice.setName(nameField.getText());
-                        if (!DOBField.getText().isEmpty()) finalChoice.setBirthyear(DOBField.getText());
+                        if (!DOBField.getText().isEmpty()) finalChoice.setBirthYear(DOBField.getText());
                         if (!emailField.getText().isEmpty()) finalChoice.setEmail(emailField.getText());
                         if (!salaryField.getText().isEmpty())
                             try {
