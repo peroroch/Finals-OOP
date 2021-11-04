@@ -1,5 +1,5 @@
 /**
- * @author Bùi Lê Anh Duy, Phạm Vũ Hải
+ * @author Bui Le Anh Duy, Pham Vu Hai, Chu Minh Quan, Ta Quang Minh, Duong Nghia Quyet
  */
 
 import java.awt.*;
@@ -34,32 +34,30 @@ public class GUIClient extends JFrame {
             line = br.readLine();
         }
         return employees;
-    } //written by Bùi Lê Anh Duy
+    } //written by Bui Le Anh Duy
 
     public static void writeChanges(ArrayList<Employee> employees, File clinicData) throws IOException {
-        File tempFile = new File(clinicData.getParent() + "temp.txt");
+        File tempFile = new File(clinicData.getParent() + "\\temp.txt");
         tempFile.createNewFile();
         try {
             PrintWriter tempWriter = new PrintWriter(new BufferedWriter(new FileWriter(tempFile)), true);
             BufferedReader tempReader = new BufferedReader(new FileReader(clinicData));
             String line = tempReader.readLine();
             int i = 0;
-            ArrayList<Integer> check = new ArrayList<>();
-            for (Employee employee : employees) {
-                check.add(employee.getLineInFile());
-            }
             while (line != null) {
                 i++;
-                if (i == check.get(0)) {
-                    line = employees.get(i - 1).getName() + "\t" +
-                            employees.get(i - 1).getBirthyear() + "\t" +
-                            employees.get(i - 1).getEmail() + "\t" +
-                            String.format("%.2f", employees.get(i - 1).getSalary()) + "\t" +
-                            employees.get(i - 1).getDepartment() + "\t" +
-                            employees.get(i - 1).getJobTitle() + "\t" +
-                            (employees.get(i - 1).isMedical() ? "1" : "0") + "\t" +
-                            employees.get(i - 1).getId();
-                }
+                if (!employees.isEmpty())
+                    if (i == employees.get(0).getId()) {
+                        line = employees.get(0).getName() + "\t" +
+                                employees.get(0).getBirthyear() + "\t" +
+                                employees.get(0).getEmail() + "\t" +
+                                String.format("%.2f", employees.get(0).getSalary()) + "\t" +
+                                employees.get(0).getDepartment() + "\t" +
+                                employees.get(0).getJobTitle() + "\t" +
+                                (employees.get(0).isMedical() ? "1" : "0") + "\t" +
+                                employees.get(0).getId();
+                        employees.remove(0);
+                    }
                 tempWriter.println(line);
                 line = tempReader.readLine();
             }
@@ -71,7 +69,7 @@ public class GUIClient extends JFrame {
             boolean result = tempFile.delete();
             throw new IOException(exception.getMessage(), exception.getCause());
         }
-    } //written by Phạm Vũ Hải
+    } //written by Pham Vu Hai
 
     private final ActionListener listener = new ActionListener() {
         public void actionPerformed(ActionEvent event) {
@@ -90,12 +88,12 @@ public class GUIClient extends JFrame {
                     }
                 }
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File(".")); //sets current directory		
+                fileChooser.setCurrentDirectory(new File(".")); //sets directory when filechooser is opened (same directory as GUIClient.java)
                 int response = fileChooser.showOpenDialog(null); //select file to open
                 if(response == JFileChooser.APPROVE_OPTION) {
                     clinicData = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                   }
-            } else
+                }
+            } else //written by Chu Minh Quan
             if (event.getSource() == searchFile) {
                 if (clinicData == null) {
                     try {
@@ -144,7 +142,7 @@ public class GUIClient extends JFrame {
                     } catch (HeadlessException exception3) {
                     }
                 }
-            } else
+            } else //written by Duong Nghia Quyet
             if (event.getSource() == editEmployee) {
                 if (employees.isEmpty()) {
                     try {
@@ -154,10 +152,6 @@ public class GUIClient extends JFrame {
                     }
                 }
 
-                ArrayList<String> names = new ArrayList<String>();
-                for (Employee employee : employees) {
-                    names.add(employee.getName());
-                }
                 Employee choice = null;
                 try {
                     choice = (Employee) JOptionPane.showInputDialog(panel,
@@ -170,7 +164,7 @@ public class GUIClient extends JFrame {
                 } catch (HeadlessException exception3) {
                 }
 
-                JDialog editorDialog = new JDialog(self, "Employee " + choice.getName());
+                JDialog editorDialog = new JDialog(self, choice.getName());
                 editorDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 JPanel editor = new JPanel(),
                         options = new JPanel();
@@ -178,7 +172,7 @@ public class GUIClient extends JFrame {
 
                 JButton b = new JButton("Just fake button");
                 Dimension buttonSize = b.getPreferredSize();
-                editor.setPreferredSize(new Dimension((int)(buttonSize.getWidth() * 2.5)+20,
+                editor.setPreferredSize(new Dimension((int)(buttonSize.getWidth() * 3.5)+20,
                         (int)(buttonSize.getHeight() * 3.5)+20 * 2));
 
                 editor.add(new JLabel("ID:"));
@@ -218,6 +212,7 @@ public class GUIClient extends JFrame {
                 okButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
+                        int initialID = finalChoice.getId();
                         if (!IDField.getText().isEmpty())
                             try {
                                 finalChoice.setId(Integer.parseInt(IDField.getText()));
@@ -236,6 +231,7 @@ public class GUIClient extends JFrame {
                                 finalChoice.setSalary(Float.parseFloat(salaryField.getText()));
                             } catch (final NumberFormatException exception) {
                                 try {
+                                    finalChoice.setId(initialID);
                                     JOptionPane.showMessageDialog(panel, "Input for Salary not valid. Please try again.");
                                     return;
                                 } catch (HeadlessException exception3) {
@@ -270,8 +266,15 @@ public class GUIClient extends JFrame {
                 editorDialog.pack();
                 editorDialog.setLocationRelativeTo(self);
                 editorDialog.setVisible(true);
-            } else
+            } else //written by Ta Quang Minh
             if (event.getSource() == writeToFile) {
+                if (!unsave) {
+                    try {
+                        JOptionPane.showMessageDialog(panel, "There is nothing to save.");
+                        return;
+                    } catch (HeadlessException exception3) {
+                    }
+                }
                 boolean i = true;
                 while (i)
                     try {
@@ -281,7 +284,7 @@ public class GUIClient extends JFrame {
                     } catch(IOException exception) {
                         i = true;
                     }
-            } else
+            } else //written by Chu Minh Quan
             if (event.getSource() == exit) {
                 if (unsave) {
                     try {
@@ -300,7 +303,7 @@ public class GUIClient extends JFrame {
                 self.setVisible(false);
                 self.dispose();
                 System.exit(0);
-            }
+            } //written by Duong Nghia Quyet
         }
     };
 
@@ -318,7 +321,7 @@ public class GUIClient extends JFrame {
 
     public GUIClient() {
         super("Employee Manager Pro");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE); //to make the program shutdown when the exit button on the GUI is pressed.
         panel.setLayout(new GridLayout(5,1,1,1));
         
         JButton b = new JButton("Just a fake button");
@@ -349,7 +352,7 @@ public class GUIClient extends JFrame {
         getContentPane().add(panel);
         pack();
         setVisible(true);
-    }
+    } //written by Pham Nguyen Minh Duc
 
     public static void main(String[] args) {
         try {
@@ -365,5 +368,5 @@ public class GUIClient extends JFrame {
         }
         
         GUIClient client = new GUIClient();
-    }
+    } // written by Pham Nguyen Minh Duc
 }
