@@ -65,6 +65,7 @@ public class GUIClient extends JFrame {
             tempReader.close();
             boolean result = clinicData.delete();
             tempFile.renameTo(clinicData);
+            clinicData = tempFile;
         } catch (IOException exception) {
             boolean result = tempFile.delete();
             throw new IOException(exception.getMessage(), exception.getCause());
