@@ -39,6 +39,7 @@ public class GUIClient extends JFrame {
     public static void writeChanges(ArrayList<Employee> employees, File clinicData) throws IOException {
         File tempFile = new File(clinicData.getParent() + "\\temp.txt");
         tempFile.createNewFile();
+        ArrayList<Employee> buffer = employees;
         try {
             PrintWriter tempWriter = new PrintWriter(new BufferedWriter(new FileWriter(tempFile)), true);
             BufferedReader tempReader = new BufferedReader(new FileReader(clinicData));
@@ -46,17 +47,17 @@ public class GUIClient extends JFrame {
             int i = 0;
             while (line != null) {
                 i++;
-                if (!employees.isEmpty())
-                    if (i == employees.get(0).getId()) {
-                        line = employees.get(0).getName() + "\t" +
-                                employees.get(0).getBirthYear() + "\t" +
-                                employees.get(0).getEmail() + "\t" +
-                                String.format("%.2f", employees.get(0).getSalary()) + "\t" +
-                                employees.get(0).getDepartment() + "\t" +
-                                employees.get(0).getJobTitle() + "\t" +
-                                (employees.get(0).isMedical() ? "1" : "0") + "\t" +
-                                employees.get(0).getId();
-                        employees.remove(0);
+                if (!buffer.isEmpty())
+                    if (i == buffer.get(0).getLineInFile()) {
+                        line = buffer.get(0).getName() + "\t" +
+                                buffer.get(0).getBirthYear() + "\t" +
+                                buffer.get(0).getEmail() + "\t" +
+                                String.format("%.2f", buffer.get(0).getSalary()) + "\t" +
+                                buffer.get(0).getDepartment() + "\t" +
+                                buffer.get(0).getJobTitle() + "\t" +
+                                (buffer.get(0).isMedical() ? "1" : "0") + "\t" +
+                                buffer.get(0).getId();
+                        buffer.remove(0);
                     }
                 tempWriter.println(line);
                 line = tempReader.readLine();
@@ -64,10 +65,13 @@ public class GUIClient extends JFrame {
             tempWriter.close();
             tempReader.close();
             boolean result = clinicData.delete();
+            System.out.println(clinicData.toString() + result);
             tempFile.renameTo(clinicData);
             clinicData = tempFile;
+            employees = new ArrayList<>();
         } catch (IOException exception) {
             boolean result = tempFile.delete();
+            System.out.println(tempFile.toString() + result);
             throw new IOException(exception.getMessage(), exception.getCause());
         }
     } //written by Pham Vu Hai
