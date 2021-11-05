@@ -27,7 +27,7 @@ public class GUIClient extends JFrame {
                         Double.parseDouble(info[3]),
                         info[4],
                         info[5],
-                        Boolean.parseBoolean(info[6]),
+                        info[6].equals("1"),
                         i);
                 employees.add(employee);    
             }
